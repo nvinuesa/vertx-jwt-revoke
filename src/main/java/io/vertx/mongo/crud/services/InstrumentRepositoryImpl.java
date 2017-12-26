@@ -3,7 +3,6 @@ package io.vertx.mongo.crud.services;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -82,12 +81,40 @@ public class InstrumentRepositoryImpl implements InstrumentRepository {
   }
 
   @Override
-  public InstrumentRepository findByCustomer(String customerId, Handler<AsyncResult<List<Instrument>>> resultHandler) {
-    return null;
+  public InstrumentRepository updateById(String id, Instrument body, Handler<AsyncResult<Instrument>> resultHandler) {
+    JsonObject query = new JsonObject().put("_id", id);
+    JsonObject update = new JsonObject().put("$set", body.toJson());
+    client.findOneAndUpdate(Instrument.DB_TABLE, query, update, res -> {
+      if (res.succeeded()) {
+        if (res.result() == null) {
+          LOGGER.error("Instrument with id " + id + " not found!");
+          resultHandler.handle(Future.failedFuture(new Throwable("Instrument not found!")));
+        } else {
+          LOGGER.info("Updating instrument with id" + id);
+          resultHandler.handle(Future.succeededFuture(
+            new Instrument(res.result())
+          ));
+        }
+      } else {
+        LOGGER.error("Error updating instrument", res.cause());
+        resultHandler.handle(Future.failedFuture(res.cause()));
+      }
+    });
+    return this;
   }
 
   @Override
   public InstrumentRepository remove(String id, Handler<AsyncResult<Void>> resultHandler) {
-    return null;
+    JsonObject query = new JsonObject().put("_id", id);
+    client.removeDocument(Instrument.DB_TABLE, query, res -> {
+      if (res.succeeded()) {
+        LOGGER.info("Deleted instrument with id" + id);
+        resultHandler.handle(Future.succeededFuture());
+      } else {
+        LOGGER.error("Error deleting instrument", res.cause());
+        resultHandler.handle(Future.failedFuture(res.cause()));
+      }
+    });
+    return this;
   }
 }

@@ -38,7 +38,7 @@ public class ControllerVerticle extends AbstractVerticle {
     router.get("/api/instruments").handler(this::getAllInstruments);
     router.get("/api/instruments/:id").handler(this::getInstrument);
     router.put("/api/instruments/:id").handler(this::updateInstrument);
-    router.delete("/api/instruments/:id").handler(this::deleteInstrument);
+    router.delete("/api/instruments/:id").handler(this::removeInstrument);
 
     int portNumber = config().getInteger(CONFIG_HTTP_SERVER_PORT, 8080);
     server
@@ -75,30 +75,50 @@ public class ControllerVerticle extends AbstractVerticle {
   private void getInstrument(RoutingContext routingContext) {
     String id = routingContext.pathParam("id");
     repository.findById(id, res -> {
-        if (!res.succeeded()) {
-          routingContext.response()
-            .setStatusCode(404)
-            .putHeader("content-type", "application/json; charset=utf-8")
-            .end(Json.encodePrettily(res.cause().getMessage()));
-        } else {
-          routingContext.response()
-            .putHeader("content-type", "application/json; charset=utf-8")
-            .end(Json.encodePrettily(res.result()));
-        }
+      if (!res.succeeded()) {
+        routingContext.response()
+          .setStatusCode(404)
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.cause().getMessage()));
+      } else {
+        routingContext.response()
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.result()));
       }
-    );
+    });
   }
 
   private void updateInstrument(RoutingContext routingContext) {
-    routingContext.response()
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(""));
+    String id = routingContext.pathParam("id");
+    Instrument instrument = Json.decodeValue(routingContext.getBodyAsString(), Instrument.class);
+    repository.updateById(id, instrument, res -> {
+      if (!res.succeeded()) {
+        routingContext.response()
+          .setStatusCode(404)
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.cause().getMessage()));
+      } else {
+        routingContext.response()
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.result()));
+      }
+    });
   }
 
-  private void deleteInstrument(RoutingContext routingContext) {
-    routingContext.response()
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(""));
+  private void removeInstrument(RoutingContext routingContext) {
+    String id = routingContext.pathParam("id");
+    repository.remove(id, res -> {
+      if (!res.succeeded()) {
+        routingContext.response()
+          .setStatusCode(404)
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.cause().getMessage()));
+      } else {
+        routingContext.response()
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.result()));
+      }
+    });
   }
 
 }

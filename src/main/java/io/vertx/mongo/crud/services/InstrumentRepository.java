@@ -22,7 +22,7 @@ public interface InstrumentRepository {
   InstrumentRepository findById(String id, Handler<AsyncResult<Instrument>> resultHandler);
 
   @Fluent
-  InstrumentRepository findByCustomer(String customerId, Handler<AsyncResult<List<Instrument>>> resultHandler);
+  InstrumentRepository updateById(String id, Instrument body, Handler<AsyncResult<Instrument>> resultHandler);
 
   @Fluent
   InstrumentRepository remove(String id, Handler<AsyncResult<Void>> resultHandler);
