@@ -23,10 +23,6 @@ public class DatabaseVerticle extends AbstractVerticle {
         .addStore(fileStore));
     retriever.getConfig(conf -> {
       JsonObject datasourceConfig = conf.result().getJsonObject("datasource");
-//      JsonObject o = new JsonObject();
-//      o.put("host", datasourceConfig.getString("host"));
-//      o.put("port", datasourceConfig.getInteger("port"));
-//      o.put("db_name", datasourceConfig.getString("db_name"));
       final MongoClient client = MongoClient.createShared(vertx, datasourceConfig);
       final InstrumentRepository service = new InstrumentRepositoryImpl(client);
       new ServiceBinder(vertx)

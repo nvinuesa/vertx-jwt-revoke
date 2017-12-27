@@ -83,7 +83,11 @@ public class InstrumentRepositoryImpl implements InstrumentRepository {
   @Override
   public InstrumentRepository updateById(String id, Instrument body, Handler<AsyncResult<Instrument>> resultHandler) {
     JsonObject query = new JsonObject().put("_id", id);
-    JsonObject update = new JsonObject().put("$set", body.toJson());
+    JsonObject json = body.toJson();
+    // Remove the id before update
+    json.remove("_id");
+    JsonObject update = new JsonObject().put("$set", json);
+
     client.findOneAndUpdate(Instrument.DB_TABLE, query, update, res -> {
       if (res.succeeded()) {
         if (res.result() == null) {
@@ -91,9 +95,10 @@ public class InstrumentRepositoryImpl implements InstrumentRepository {
           resultHandler.handle(Future.failedFuture(new Throwable("Instrument not found!")));
         } else {
           LOGGER.info("Updating instrument with id" + id);
-          resultHandler.handle(Future.succeededFuture(
-            new Instrument(res.result())
-          ));
+          res.result().remove("_id");
+          Instrument updated = new Instrument(res.result());
+          updated.setId(id);
+          resultHandler.handle(Future.succeededFuture(updated));
         }
       } else {
         LOGGER.error("Error updating instrument", res.cause());
