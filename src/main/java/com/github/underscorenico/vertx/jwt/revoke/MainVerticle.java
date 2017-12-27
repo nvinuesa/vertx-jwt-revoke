@@ -20,7 +20,7 @@ public class MainVerticle extends AbstractVerticle {
       Future<String> httpVerticleDeployment = Future.future();
       vertx.deployVerticle(
         // If we need to create more than one instance, then we need to pass the verticle class name instead of the instance (with new):
-        "io.vertx.mongo.crud.controller.ControllerVerticle",
+        "com.github.underscorenico.vertx.jwt.revoke.controller.ControllerVerticle",
         new DeploymentOptions().setInstances(2),
         httpVerticleDeployment.completer());
 
