@@ -1,4 +1,4 @@
-package io.vertx.mongo.crud.services;
+package com.github.underscorenico.vertx.jwt.revoke.services;
 
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.codegen.annotations.ProxyGen;

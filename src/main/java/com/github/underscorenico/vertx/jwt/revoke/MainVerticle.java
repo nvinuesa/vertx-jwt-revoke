@@ -1,9 +1,9 @@
-package io.vertx.mongo.crud;
+package com.github.underscorenico.vertx.jwt.revoke;
 
+import com.github.underscorenico.vertx.jwt.revoke.services.DatabaseVerticle;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
-import io.vertx.mongo.crud.services.DatabaseVerticle;
 
 public class MainVerticle extends AbstractVerticle {
 

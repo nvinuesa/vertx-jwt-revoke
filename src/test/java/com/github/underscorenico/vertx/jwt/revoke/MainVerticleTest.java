@@ -1,4 +1,4 @@
-package io.vertx.mongo.crud;
+package com.github.underscorenico.vertx.jwt.revoke;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.Async;

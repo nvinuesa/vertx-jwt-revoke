@@ -5,14 +5,14 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.vertx.mongo.crud</groupId>
-  <artifactId>mongo-vertx-crud</artifactId>
+  <groupId>com.github.underscorenico</groupId>
+  <artifactId>vertx-jwt-revoke</artifactId>
   <version>0.1.0-SNAPSHOT</version>
 
   <properties>
     <vertx.version>3.5.0</vertx.version>
-    <main.verticle>io.vertx.mongo.crud.MainVerticle</main.verticle>
-    <vertx.verticle>io.vertx.mongo.crud.MainVerticle</vertx.verticle>
+    <main.verticle>com.github.underscorenico.vertx.jwt.revoke.MainVerticle</main.verticle>
+    <vertx.verticle>com.github.underscorenico.vertx.jwt.revoke.MainVerticle</vertx.verticle>
   </properties>
 
   <dependencyManagement>

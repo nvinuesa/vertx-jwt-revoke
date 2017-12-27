@@ -1,4 +1,4 @@
-package io.vertx.mongo.crud.services;
+package com.github.underscorenico.vertx.jwt.revoke.services;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.mongo.MongoClient;
-import io.vertx.mongo.crud.controller.ControllerVerticle;
+import com.github.underscorenico.vertx.jwt.revoke.controller.ControllerVerticle;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,5 +1,7 @@
-package io.vertx.mongo.crud.controller;
+package com.github.underscorenico.vertx.jwt.revoke.controller;
 
+import com.github.underscorenico.vertx.jwt.revoke.services.Instrument;
+import com.github.underscorenico.vertx.jwt.revoke.services.InstrumentRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
@@ -17,8 +19,6 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import io.vertx.mongo.crud.services.Instrument;
-import io.vertx.mongo.crud.services.InstrumentRepository;
 
 public class ControllerVerticle extends AbstractVerticle {
 

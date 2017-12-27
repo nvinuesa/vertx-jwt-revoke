@@ -1,4 +1,4 @@
-package io.vertx.mongo.crud.services;
+package com.github.underscorenico.vertx.jwt.revoke.services;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.vertx.codegen.annotations.DataObject;
